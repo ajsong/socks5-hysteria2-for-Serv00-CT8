@@ -40,7 +40,7 @@ jobs:
           echo "CHAT_ID=\"$TG_CHAT_ID\"" > sshpass.sh
           echo "MODE=\"HTML\"" > sshpass.sh
           echo "URL=\"https://api.telegram.org/bot${TOKEN}/sendMessage\"" > sshpass.sh
-          echo "curl -s -o /dev/null -X POST $URL -d chat_id=${CHAT_ID} -d parse_mode=${MODE} -d text=\"${MESSAGE}\"" > sshpass.sh
+          echo "curl -s -o /dev/null -X POST ${URL} -d chat_id=${CHAT_ID} -d parse_mode=${MODE} -d text=\"${MESSAGE}\"" > sshpass.sh
           chmod +x sshpass.sh
         env: 
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
