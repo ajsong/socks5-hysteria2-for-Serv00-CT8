@@ -29,7 +29,7 @@ jobs:
             username=$(echo "$account" | jq -r '.username')
             password=$(echo "$account" | jq -r '.password')
             ssh=$(echo "$account" | jq -r '.ssh')
-            accounts="${accounts}\n${username}${ssh}"
+            accounts="${accounts}\n${username}@${ssh}"
 
             echo "echo \"Executing for $username@$ssh\"" >> sshpass.sh
             # echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/gshtwy/socks5-hysteria2-for-serv00/main/crtest.sh)'" >> sshpass.sh
@@ -40,9 +40,9 @@ jobs:
           CHAT_ID="$TG_CHAT_ID"
           MODE="HTML"
           URL="https://api.telegram.org/bot${TOKEN}/sendMessage"
-          echo "curl -s -o /dev/null -X POST ${URL} -d chat_id=${CHAT_ID} -d parse_mode=${MODE} -d text=\"${MESSAGE}\"" > sshpass.sh
+          echo "echo -e \"text=\"${MESSAGE}\"\" | curl -s -o /dev/null -X POST ${URL} -d chat_id=${CHAT_ID} -d parse_mode=${MODE} -d @-" > sshpass.sh
           chmod +x sshpass.sh
-        env: 
+        env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
 
