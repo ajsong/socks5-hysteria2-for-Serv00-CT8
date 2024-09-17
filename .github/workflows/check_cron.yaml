@@ -29,17 +29,18 @@ jobs:
             username=$(echo "$account" | jq -r '.username')
             password=$(echo "$account" | jq -r '.password')
             ssh=$(echo "$account" | jq -r '.ssh')
-            accounts="${accounts}${username}@${ssh}%0A"
+            accounts="${accounts}%0A${username}@${ssh}"
 
             echo "echo \"Executing for $username@$ssh\"" >> sshpass.sh
             # echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/gshtwy/socks5-hysteria2-for-serv00/main/crtest.sh)'" >> sshpass.sh
             echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/ajsong/socks5-hysteria2-for-Serv00-CT8/main/crtest.sh)'" >> sshpass.sh
           done < <(jq -c '.[]' accounts.json)
-          MESSAGE="Serv00 Check Cron%0A$accounts"
+          MESSAGE="Serv00任务检查$accounts"
           TOKEN="$TG_TOKEN"
           CHAT_ID="$TG_CHAT_ID"
+          MODE="HTML"
           URL="https://api.telegram.org/bot${TOKEN}/sendMessage"
-          echo "curl -s -o /dev/null -X POST ${URL} -d chat_id=${CHAT_ID} -d text=\"${MESSAGE}\"" > sshpass.sh
+          echo "curl -s -o /dev/null -X POST ${URL} -d chat_id=${CHAT_ID} -d parse_mode=${MODE} -d text=\"${MESSAGE}\"" > sshpass.sh
           chmod +x sshpass.sh
         env:
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
