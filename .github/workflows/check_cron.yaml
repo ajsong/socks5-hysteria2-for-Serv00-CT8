@@ -35,11 +35,11 @@ jobs:
             # echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/gshtwy/socks5-hysteria2-for-serv00/main/crtest.sh)'" >> sshpass.sh
             echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/ajsong/socks5-hysteria2-for-Serv00-CT8/main/crtest.sh)'" >> sshpass.sh
           done < <(jq -c '.[]' accounts.json)
-          echo -e "MESSAGE=\"Serv00 Check Complete\n$accounts\"" > sshpass.sh
-          echo "TOKEN=\"$TG_TOKEN\"" > sshpass.sh
-          echo "CHAT_ID=\"$TG_CHAT_ID\"" > sshpass.sh
-          echo "MODE=\"HTML\"" > sshpass.sh
-          echo "URL=\"https://api.telegram.org/bot${TOKEN}/sendMessage\"" > sshpass.sh
+          MESSAGE="Serv00 Check Complete\n$accounts"
+          TOKEN="$TG_TOKEN"
+          CHAT_ID="$TG_CHAT_ID"
+          MODE="HTML"
+          URL="https://api.telegram.org/bot${TOKEN}/sendMessage"
           echo "curl -s -o /dev/null -X POST ${URL} -d chat_id=${CHAT_ID} -d parse_mode=${MODE} -d text=\"${MESSAGE}\"" > sshpass.sh
           chmod +x sshpass.sh
         env: 
