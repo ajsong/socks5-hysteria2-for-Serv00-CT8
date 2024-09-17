@@ -34,6 +34,9 @@ jobs:
             echo "sshpass -p '$password' ssh -o StrictHostKeyChecking=no '$username@$ssh' 'bash <(curl -s https://raw.githubusercontent.com/ajsong/socks5-hysteria2-for-Serv00-CT8/main/crtest.sh)'" >> sshpass.sh
           done < <(jq -c '.[]' accounts.json)
           chmod +x sshpass.sh
+        env: 
+          TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
 
       - name: Execute SSH Commands
         run: ./sshpass.sh
